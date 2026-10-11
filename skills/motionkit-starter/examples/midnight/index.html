@@ -6,35 +6,14 @@
     <title>Ship less, finish more</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
-      /* Fonts: files live in ./fonts next to this file */
-      @font-face {
-        font-family: "Inter";
-        font-weight: 700;
-        font-style: normal;
-        src: url("fonts/inter-latin-700-normal.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Inter";
-        font-weight: 400;
-        font-style: normal;
-        src: url("fonts/inter-latin-400-normal.woff2") format("woff2");
-      }
+      /* A complete example. Rewrite the scenes for your content. */
+      @font-face { font-family: "Inter"; font-weight: 700; font-style: normal; src: url("fonts/inter-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 400; font-style: normal; src: url("fonts/inter-latin-400-normal.woff2") format("woff2"); }
 
       /* Style tokens: Midnight */
-      :root {
-        --bg: #0b0c10;
-        --bg2: #0b0c10;
-        --ink: #f2f3f7;
-        --accent: #a596ff;
-        --muted: #9197aa;
-        --surface: #14161c;
-        --head: "Inter", sans-serif;
-        --body: "Inter", sans-serif;
-        --weight: 700;
-        --radius: 14px;
-      }
+      :root {--bg: #0b0c10;--bg2: #0b0c10;--ink: #f2f3f7;--accent: #a596ff;--muted: #9197aa;--surface: #14161c;--head: "Inter", sans-serif;--body: "Inter", sans-serif;--weight: 700;--radius: 14px;}
+      :root { --on-accent: #0b0c10; --glow: rgba(0, 0, 0, 0.14); }
 
-      /* Shared scene layout */
       body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
       #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
       #backdrop { position: absolute; inset: 0; background: linear-gradient(135deg, var(--bg), var(--bg2)); }
@@ -57,6 +36,43 @@
       .step b { display: flex; align-items: center; justify-content: center; flex: none; width: 76px; height: 76px; border-radius: var(--radius); background: var(--accent); color: var(--bg); font-size: 40px; box-sizing: border-box; }
       .quote { display: block; font-family: var(--head); font-weight: var(--weight); font-size: 92px; line-height: 1.15; max-width: 1500px; }
       .by { display: block; font-size: 36px; color: var(--accent); }
+      .stage { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 40px; align-items: inherit; box-sizing: border-box; }
+      .stage p { font-size: 48px; }
+      .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+      .wi { display: inline-block; }
+      .hl { color: var(--accent); }
+      .icon { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+      .icon path { stroke-dasharray: 1; }
+      #decor { position: absolute; inset: 0; overflow: hidden; }
+      .blob { position: absolute; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(closest-side, var(--glow), transparent); }
+      #progress { position: absolute; left: 0; bottom: 0; width: 100%; height: 10px; background: var(--accent); transform-origin: 0 50%; }
+      .orn { position: absolute; right: 0; top: 0; width: 640px; height: 640px; fill: none; stroke: var(--accent); stroke-width: 3; opacity: 0.55; }
+      .orn circle { stroke-dasharray: 1; }
+      .wash { position: absolute; inset: 0; background: var(--accent); transform-origin: 0 50%; }
+      .on-wash .label, .on-wash h2 { color: var(--on-accent); background: none; border-color: var(--on-accent); }
+      .section-title { font-size: 128px; }
+      .rule { display: block; width: 220px; height: 8px; background: var(--accent); transform-origin: 0 50%; }
+      .split { display: grid; grid-template-columns: auto 1fr; gap: 90px; align-items: center; width: 100%; text-align: left; }
+      .split .side-text { display: flex; flex-direction: column; gap: 30px; align-items: flex-start; }
+      .split .side-text p { margin: 0; font-size: 56px; line-height: 1.25; color: var(--ink); max-width: 900px; }
+      .tile { display: flex; align-items: center; justify-content: center; flex: none; width: 120px; height: 120px; border-radius: var(--radius); background: var(--accent); color: var(--on-accent); box-sizing: border-box; }
+      .tile .icon { width: 68px; height: 68px; }
+      .chart { justify-content: center; }
+      .col { max-width: 520px; }
+      .cards { display: flex; gap: 40px; align-self: stretch; text-align: left; box-sizing: border-box; }
+      .card { flex: 1; display: flex; flex-direction: column; gap: 22px; padding: 44px; background: var(--surface); border-radius: var(--radius); box-sizing: border-box; }
+      .card h3 { display: block; margin: 0; font-family: var(--head); font-weight: var(--weight); font-size: 50px; line-height: 1.1; }
+      .card p { font-size: 36px; line-height: 1.3; max-width: none; margin: 0; }
+      .compare { position: relative; display: flex; gap: 48px; align-self: stretch; text-align: left; box-sizing: border-box; }
+      .side { position: relative; flex: 1; display: flex; flex-direction: column; gap: 20px; padding: 50px 54px; background: var(--surface); border-radius: var(--radius); border: 5px solid transparent; box-sizing: border-box; }
+      .side.is-key { border-color: var(--accent); }
+      .side .name { font-size: 32px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-align: left; }
+      .side .fig { display: block; font-family: var(--head); font-weight: var(--weight); font-size: 132px; line-height: 1; }
+      .side p { font-size: 46px; max-width: none; color: var(--ink); margin: 0; }
+      .side .tick { position: absolute; right: 30px; top: 30px; width: 64px; height: 64px; color: var(--accent); }
+      .vs { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--accent); color: var(--on-accent); font-size: 34px; font-weight: 700; box-sizing: border-box; }
+      .mark { display: block; height: 150px; font-family: var(--head); font-weight: var(--weight); font-size: 320px; line-height: 1; color: var(--accent); }
+      .cta { display: block; width: fit-content; padding: 22px 44px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 44px; font-weight: 700; box-sizing: border-box; }
 
       /* Midnight */
       #backdrop { background: radial-gradient(1000px 520px at 50% -8%, rgba(165, 150, 255, 0.28), transparent 70%), var(--bg); }
@@ -66,72 +82,75 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="28">
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="34.7">
       <div id="backdrop"></div>
+      <div id="decor"><div class="blob" id="blob-a" style="left: -260px; top: -320px"></div><div class="blob" id="blob-b" style="left: 1180px; top: 420px"></div></div>
       <div id="frame"></div>
 
-      <section id="scene-title" class="clip" data-start="0" data-duration="4" data-track-index="1">
-        <div class="label in">Roadmap · Q4</div>
-        <h1 class="in">Ship less, finish more</h1>
-        <p class="in">Three projects this quarter instead of seven.</p>
+      <section id="s1-title" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
+        <svg class="orn" viewBox="0 0 640 640" aria-hidden="true"><circle pathLength="1" cx="640" cy="0" r="240"/><circle pathLength="1" cx="640" cy="0" r="380"/><circle pathLength="1" cx="640" cy="0" r="520"/></svg>
+        <div class="stage" id="s1-title-stage">
+          <div class="label in">Roadmap · Q4</div>
+          <h1 class="reveal"><span class="w"><span class="wi">Ship</span></span> <span class="w"><span class="wi">less,</span></span> <span class="w"><span class="wi hl">finish</span></span> <span class="w"><span class="wi hl">more</span></span></h1>
+          <p class="in">Three projects this quarter instead of seven.</p>
+        </div>
       </section>
 
-      <section id="scene-stat" class="clip" data-start="4" data-duration="4" data-track-index="1">
-        <div class="big in"><span id="stat-number">3</span><small></small></div>
-        <p class="in">Projects in flight, down from seven</p>
-      </section>
-
-      <section id="scene-chart" class="clip" data-start="8" data-duration="6" data-track-index="1">
-        <h2 class="in">Cycle time per issue (days)</h2>
-        <div class="chart">
-          <div class="col">
-            <div class="value">9</div>
-            <span class="bar" style="height: 100%"></span>
-            <div class="name">Jul</div>
-          </div>
-          <div class="col">
-            <div class="value">8</div>
-            <span class="bar" style="height: 89%"></span>
-            <div class="name">Aug</div>
-          </div>
-          <div class="col">
-            <div class="value">6</div>
-            <span class="bar" style="height: 67%"></span>
-            <div class="name">Sep</div>
-          </div>
-          <div class="col">
-            <div class="value">4</div>
-            <span class="bar is-key" style="height: 44%"></span>
-            <div class="name">Oct</div>
+      <section id="s2-stat" class="clip" data-start="4.5" data-duration="5" data-track-index="1">
+        <div class="stage" id="s2-stat-stage">
+          <div class="split">
+            <div class="big in"><span id="s2-stat-number">3</span></div>
+            <div class="side-text"><div class="tile"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18z"/><path pathLength="1" d="M12 7a5 5 0 1 0 0 10a5 5 0 1 0 0-10z"/><path pathLength="1" d="M12 11.5h.01"/></svg></div><span class="rule"></span><p class="in">Projects in flight, down from seven</p></div>
           </div>
         </div>
       </section>
 
-      <section id="scene-steps" class="clip" data-start="14" data-duration="6" data-track-index="1">
-        <h2 class="in">This quarter</h2>
-        <div class="steps">
-          <div class="step"><b>1</b><span>Offline sync, end to end</span></div>
-          <div class="step"><b>2</b><span>Keyboard-first command menu</span></div>
-          <div class="step"><b>3</b><span>Import from the old tracker</span></div>
+      <section id="s3-chart" class="clip" data-start="9.5" data-duration="7.1" data-track-index="1">
+        <div class="stage" id="s3-chart-stage">
+          <h2 class="reveal"><span class="w"><span class="wi">Cycle</span></span> <span class="w"><span class="wi">time</span></span> <span class="w"><span class="wi">per</span></span> <span class="w"><span class="wi">issue</span></span> <span class="w"><span class="wi">(days)</span></span></h2>
+          <div class="chart">
+            <div class="col"><div class="value">9</div><span class="bar" style="height: 100%"></span><div class="name">Jul</div></div>
+            <div class="col"><div class="value">8</div><span class="bar" style="height: 89%"></span><div class="name">Aug</div></div>
+            <div class="col"><div class="value">6</div><span class="bar" style="height: 67%"></span><div class="name">Sep</div></div>
+            <div class="col is-key-col"><div class="value">4</div><span class="bar is-key" style="height: 44%"></span><div class="name">Oct</div></div>
+          </div>
         </div>
       </section>
 
-      <section id="scene-quote" class="clip" data-start="20" data-duration="4" data-track-index="1">
-        <div class="quote in">A feature is not shipped until someone stops asking for it.</div>
-        <div class="by in">Team principle</div>
+      <section id="s4-steps" class="clip" data-start="16.6" data-duration="6.9" data-track-index="1">
+        <div class="stage" id="s4-steps-stage">
+          <h2 class="reveal"><span class="w"><span class="wi">This</span></span> <span class="w"><span class="wi">quarter</span></span></h2>
+          <div class="steps">
+            <div class="step"><b>1</b><span>Offline sync, end to end</span></div>
+            <div class="step"><b>2</b><span>Keyboard-first command menu</span></div>
+            <div class="step"><b>3</b><span>Import from the old tracker</span></div>
+          </div>
+        </div>
       </section>
 
-      <section id="scene-takeaway" class="clip" data-start="24" data-duration="4" data-track-index="1">
-        <div class="label in">Takeaway</div>
-        <h2 class="in">Everything else waits for January</h2>
-        <p class="in">The backlog is still there. It is just not this quarter.</p>
+      <section id="s5-quote" class="clip" data-start="23.5" data-duration="6.2" data-track-index="1">
+        <div class="stage" id="s5-quote-stage">
+          <span class="mark">“</span>
+          <div class="quote reveal"><span class="w"><span class="wi">A</span></span> <span class="w"><span class="wi">feature</span></span> <span class="w"><span class="wi">is</span></span> <span class="w"><span class="wi">not</span></span> <span class="w"><span class="wi">shipped</span></span> <span class="w"><span class="wi">until</span></span> <span class="w"><span class="wi">someone</span></span> <span class="w"><span class="wi">stops</span></span> <span class="w"><span class="wi">asking</span></span> <span class="w"><span class="wi">for</span></span> <span class="w"><span class="wi">it.</span></span></div>
+          <div class="by in">Team principle</div>
+        </div>
       </section>
+
+      <section id="s6-takeaway" class="clip" data-start="29.7" data-duration="5" data-track-index="1">
+        <svg class="orn" viewBox="0 0 640 640" aria-hidden="true"><circle pathLength="1" cx="640" cy="0" r="240"/><circle pathLength="1" cx="640" cy="0" r="380"/><circle pathLength="1" cx="640" cy="0" r="520"/></svg>
+        <div class="stage" id="s6-takeaway-stage">
+          <div class="label in">Takeaway</div>
+          <h2 class="reveal"><span class="w"><span class="wi">Everything</span></span> <span class="w"><span class="wi">else</span></span> <span class="w"><span class="wi">waits</span></span> <span class="w"><span class="wi">for</span></span> <span class="w"><span class="wi">January</span></span></h2>
+          <p class="in">The backlog is still there. It is just not this quarter.</p>
+        </div>
+      </section>
+
+      <div id="progress"></div>
     </div>
     <script>
       // Motion profile: Midnight
       const MOTION = {"enter":"rise","ease":"power3.out","dur":0.5,"stagger":0.07,"rise":14};
-
-      // How an element enters, by profile. Start states live in the tween, never in CSS.
+      // Start states live in the tween, never in CSS.
       const ENTER = {
         rise: [{ opacity: 0, y: MOTION.rise }, { opacity: 1, y: 0 }],
         pop: [{ opacity: 0, scale: 0.86 }, { opacity: 1, scale: 1 }],
@@ -144,36 +163,68 @@
         const [from, to] = ENTER[MOTION.enter];
         tl.fromTo(selector, from, { ...to, duration: MOTION.dur, ease: MOTION.ease, stagger: MOTION.stagger }, at);
       }
+      // Headings: typed or wiped on in the styles built around that, word by word everywhere else.
+      function heading(selector, at) {
+        if (!document.querySelector(selector)) return;
+        if (MOTION.enter === "type" || MOTION.enter === "wipe") tl.fromTo(selector, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: MOTION.ease }, at);
+        else tl.fromTo(selector + " .wi", { yPercent: 115 }, { yPercent: 0, duration: 0.7, ease: "power3.out", stagger: 0.07 }, at);
+      }
+      const draw = (selector, at, duration = 0.9) => tl.fromTo(selector, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration, ease: "power2.inOut", stagger: 0.12 }, at);
+      const pop = (selector, at) => tl.fromTo(selector, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)", stagger: 0.12 }, at);
 
-      // Scene 1: title
-      enter("#scene-title .in", 0 + 0.3);
+      // Running through the whole video: a slow drift behind everything and a progress line.
+      tl.fromTo("#blob-a", { x: 0, y: 0 }, { x: 420, y: 260, duration: 34.7, ease: "none" }, 0);
+      tl.fromTo("#blob-b", { x: 0, y: 0 }, { x: -520, y: -300, duration: 34.7, ease: "none" }, 0);
+      tl.fromTo("#progress", { scaleX: 0 }, { scaleX: 1, duration: 34.7, ease: "none" }, 0);
 
-      // Scene 2: one big number, counted up to its real value
-      enter("#scene-stat .in", 4 + 0.2);
-      const counter = { value: 0 };
-      const statNumber = document.getElementById("stat-number");
-      tl.to(counter, {
-        value: 3,
-        duration: 1.2,
-        ease: "power2.out",
-        onUpdate: () => { statNumber.textContent = Math.round(counter.value); },
-      }, 4 + 0.2);
+      // s1-title: 0s to 4.5s
+      tl.fromTo("#s1-title-stage", { scale: 1 }, { scale: 1.035, duration: 4.5, ease: "none" }, 0);
+      heading("#s1-title .reveal", 0.2);
+      if (document.querySelector("#s1-title .in")) enter("#s1-title .in", 0.5);
+      draw("#s1-title .orn circle", 0.1, 1.6);
+      tl.fromTo("#s1-title-stage", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 4.1);
 
-      // Scene 3: bars grow from the baseline, then values appear
-      enter("#scene-chart .in", 8 + 0.2);
-      tl.fromTo("#scene-chart .bar", { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: "power2.out", stagger: 0.1 }, 8 + 0.8);
-      tl.fromTo("#scene-chart .name", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.1 }, 8 + 0.8);
-      tl.fromTo("#scene-chart .value", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.1 }, 8 + 1.5);
+      // s2-stat: 4.5s to 9.5s
+      tl.fromTo("#s2-stat-stage", { scale: 1 }, { scale: 1.035, duration: 5, ease: "none" }, 4.5);
+      heading("#s2-stat .reveal", 4.7);
+      if (document.querySelector("#s2-stat .in")) enter("#s2-stat .in", 5);
+      tl.fromTo("#s2-stat .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 5.2);
+      pop("#s2-stat .tile", 5);
+      draw("#s2-stat .tile path", 5.2);
+      { const el = document.getElementById("s2-stat-number"); const n = { v: 0 };
+        const show = (v) => { const [w, f] = Math.abs(v).toFixed(0).split("."); el.textContent = "" + w + (f ? "." + f : ""); };
+        tl.to(n, { v: 3, duration: 1.4, ease: "power2.out", onUpdate: () => show(n.v) }, 4.8); }
+      tl.fromTo("#s2-stat-stage", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 9.1);
 
-      // Scene 4: steps, one at a time
-      enter("#scene-steps .in", 14 + 0.2);
-      enter("#scene-steps .step", 14 + 0.8);
+      // s3-chart: 9.5s to 16.6s
+      tl.fromTo("#s3-chart-stage", { scale: 1 }, { scale: 1.035, duration: 7.1, ease: "none" }, 9.5);
+      heading("#s3-chart .reveal", 9.7);
+      if (document.querySelector("#s3-chart .in")) enter("#s3-chart .in", 10);
+      tl.fromTo("#s3-chart .bar", { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: "power3.out", stagger: 0.12 }, 10.3);
+      tl.fromTo("#s3-chart .name", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.12 }, 10.3);
+      tl.fromTo("#s3-chart .value", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.12 }, 11);
+      tl.fromTo("#s3-chart-stage", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 16.2);
 
-      // Scene 5: quote
-      enter("#scene-quote .in", 20 + 0.3);
+      // s4-steps: 16.6s to 23.5s
+      tl.fromTo("#s4-steps-stage", { scale: 1 }, { scale: 1.035, duration: 6.9, ease: "none" }, 16.6);
+      heading("#s4-steps .reveal", 16.8);
+      if (document.querySelector("#s4-steps .in")) enter("#s4-steps .in", 17.1);
+      tl.fromTo("#s4-steps .step", { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.45 }, 17.4);
+      tl.fromTo("#s4-steps .step b", { scale: 0 }, { scale: 1, duration: 0.5, ease: "back.out(2)", stagger: 0.45 }, 17.6);
+      tl.fromTo("#s4-steps-stage", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 23.1);
 
-      // Scene 6: takeaway
-      enter("#scene-takeaway .in", 24 + 0.3);
+      // s5-quote: 23.5s to 29.7s
+      tl.fromTo("#s5-quote-stage", { scale: 1 }, { scale: 1.035, duration: 6.2, ease: "none" }, 23.5);
+      heading("#s5-quote .reveal", 23.7);
+      if (document.querySelector("#s5-quote .in")) enter("#s5-quote .in", 24);
+      pop("#s5-quote .mark", 23.6);
+      tl.fromTo("#s5-quote-stage", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 29.3);
+
+      // s6-takeaway: 29.7s to 34.7s
+      tl.fromTo("#s6-takeaway-stage", { scale: 1 }, { scale: 1.035, duration: 5, ease: "none" }, 29.7);
+      heading("#s6-takeaway .reveal", 29.9);
+      if (document.querySelector("#s6-takeaway .in")) enter("#s6-takeaway .in", 30.2);
+      draw("#s6-takeaway .orn circle", 29.8, 1.6);
 
       window.__timelines["main"] = tl;
     </script>

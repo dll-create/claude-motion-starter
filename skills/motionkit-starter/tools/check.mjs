@@ -15,6 +15,7 @@ import { readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { normalise, numbersIn } from './numbers.mjs';
 
+
 const args = process.argv.slice(2);
 const sourceFlag = args.indexOf('--source');
 const sourceFile = sourceFlag >= 0 ? args.splice(sourceFlag, 2)[1] : null;
