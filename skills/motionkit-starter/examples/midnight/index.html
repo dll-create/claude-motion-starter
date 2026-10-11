@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Ship less, finish more</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      /* Fonts: files live in ./fonts next to this file */
+      @font-face {
+        font-family: "Inter";
+        font-weight: 700;
+        font-style: normal;
+        src: url("fonts/inter-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        font-style: normal;
+        src: url("fonts/inter-latin-400-normal.woff2") format("woff2");
+      }
+
+      /* Style tokens: Midnight */
+      :root {
+        --bg: #0b0c10;
+        --bg2: #0b0c10;
+        --ink: #f2f3f7;
+        --accent: #a596ff;
+        --muted: #9197aa;
+        --surface: #14161c;
+        --head: "Inter", sans-serif;
+        --body: "Inter", sans-serif;
+        --weight: 700;
+        --radius: 14px;
+      }
+
+      /* Shared scene layout */
+      body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+      #backdrop { position: absolute; inset: 0; background: linear-gradient(135deg, var(--bg), var(--bg2)); }
+      .clip { position: absolute; inset: 0; box-sizing: border-box; padding: 110px 140px; display: flex; flex-direction: column; justify-content: center; gap: 40px; }
+      .label { display: block; font-size: 30px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+      h1, h2 { display: block; margin: 0; font-family: var(--head); font-weight: var(--weight); line-height: 1.05; max-width: 1500px; }
+      h1 { font-size: 140px; }
+      h2 { font-size: 84px; }
+      p { display: block; margin: 0; font-size: 44px; line-height: 1.35; color: var(--muted); max-width: 1250px; }
+      .big { display: block; font-family: var(--head); font-weight: var(--weight); font-size: 360px; line-height: 0.9; }
+      .big small { font-size: 0.4em; margin-left: 0.08em; }
+      .chart { display: flex; align-items: flex-end; gap: 48px; height: 500px; box-sizing: border-box; }
+      .col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; }
+      .bar { display: block; width: 100%; background: var(--surface); border-radius: var(--radius); transform-origin: 50% 100%; box-sizing: border-box; }
+      .bar.is-key { background: var(--accent); }
+      .value { font-size: 44px; font-weight: 700; }
+      .name { font-size: 30px; color: var(--muted); }
+      .steps { display: flex; flex-direction: column; gap: 26px; box-sizing: border-box; }
+      .step { display: flex; align-items: center; gap: 34px; padding: 30px 38px; background: var(--surface); border-radius: var(--radius); font-size: 46px; box-sizing: border-box; }
+      .step b { display: flex; align-items: center; justify-content: center; flex: none; width: 76px; height: 76px; border-radius: var(--radius); background: var(--accent); color: var(--bg); font-size: 40px; box-sizing: border-box; }
+      .quote { display: block; font-family: var(--head); font-weight: var(--weight); font-size: 92px; line-height: 1.15; max-width: 1500px; }
+      .by { display: block; font-size: 36px; color: var(--accent); }
+
+      /* Midnight */
+      #backdrop { background: radial-gradient(1000px 520px at 50% -8%, rgba(165, 150, 255, 0.28), transparent 70%), var(--bg); }
+      h1 { font-size: 118px; letter-spacing: -0.04em; } h2 { font-size: 72px; letter-spacing: -0.03em; }
+      .step, .bar { border: 2px solid #272a35; } .bar.is-key { border-color: var(--accent); box-shadow: 0 0 60px rgba(165, 150, 255, 0.45); }
+      .step b { background: #272a35; color: var(--accent); } .label { letter-spacing: 0.2em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="28">
+      <div id="backdrop"></div>
+      <div id="frame"></div>
+
+      <section id="scene-title" class="clip" data-start="0" data-duration="4" data-track-index="1">
+        <div class="label in">Roadmap · Q4</div>
+        <h1 class="in">Ship less, finish more</h1>
+        <p class="in">Three projects this quarter instead of seven.</p>
+      </section>
+
+      <section id="scene-stat" class="clip" data-start="4" data-duration="4" data-track-index="1">
+        <div class="big in"><span id="stat-number">3</span><small></small></div>
+        <p class="in">Projects in flight, down from seven</p>
+      </section>
+
+      <section id="scene-chart" class="clip" data-start="8" data-duration="6" data-track-index="1">
+        <h2 class="in">Cycle time per issue (days)</h2>
+        <div class="chart">
+          <div class="col">
+            <div class="value">9</div>
+            <span class="bar" style="height: 100%"></span>
+            <div class="name">Jul</div>
+          </div>
+          <div class="col">
+            <div class="value">8</div>
+            <span class="bar" style="height: 89%"></span>
+            <div class="name">Aug</div>
+          </div>
+          <div class="col">
+            <div class="value">6</div>
+            <span class="bar" style="height: 67%"></span>
+            <div class="name">Sep</div>
+          </div>
+          <div class="col">
+            <div class="value">4</div>
+            <span class="bar is-key" style="height: 44%"></span>
+            <div class="name">Oct</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-steps" class="clip" data-start="14" data-duration="6" data-track-index="1">
+        <h2 class="in">This quarter</h2>
+        <div class="steps">
+          <div class="step"><b>1</b><span>Offline sync, end to end</span></div>
+          <div class="step"><b>2</b><span>Keyboard-first command menu</span></div>
+          <div class="step"><b>3</b><span>Import from the old tracker</span></div>
+        </div>
+      </section>
+
+      <section id="scene-quote" class="clip" data-start="20" data-duration="4" data-track-index="1">
+        <div class="quote in">A feature is not shipped until someone stops asking for it.</div>
+        <div class="by in">Team principle</div>
+      </section>
+
+      <section id="scene-takeaway" class="clip" data-start="24" data-duration="4" data-track-index="1">
+        <div class="label in">Takeaway</div>
+        <h2 class="in">Everything else waits for January</h2>
+        <p class="in">The backlog is still there. It is just not this quarter.</p>
+      </section>
+    </div>
+    <script>
+      // Motion profile: Midnight
+      const MOTION = {"enter":"rise","ease":"power3.out","dur":0.5,"stagger":0.07,"rise":14};
+
+      // How an element enters, by profile. Start states live in the tween, never in CSS.
+      const ENTER = {
+        rise: [{ opacity: 0, y: MOTION.rise }, { opacity: 1, y: 0 }],
+        pop: [{ opacity: 0, scale: 0.86 }, { opacity: 1, scale: 1 }],
+        cut: [{ opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1 }],
+        wipe: [{ clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)" }],
+        type: [{ clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)" }],
+      };
+      const tl = gsap.timeline({ paused: true });
+      function enter(selector, at) {
+        const [from, to] = ENTER[MOTION.enter];
+        tl.fromTo(selector, from, { ...to, duration: MOTION.dur, ease: MOTION.ease, stagger: MOTION.stagger }, at);
+      }
+
+      // Scene 1: title
+      enter("#scene-title .in", 0 + 0.3);
+
+      // Scene 2: one big number, counted up to its real value
+      enter("#scene-stat .in", 4 + 0.2);
+      const counter = { value: 0 };
+      const statNumber = document.getElementById("stat-number");
+      tl.to(counter, {
+        value: 3,
+        duration: 1.2,
+        ease: "power2.out",
+        onUpdate: () => { statNumber.textContent = Math.round(counter.value); },
+      }, 4 + 0.2);
+
+      // Scene 3: bars grow from the baseline, then values appear
+      enter("#scene-chart .in", 8 + 0.2);
+      tl.fromTo("#scene-chart .bar", { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: "power2.out", stagger: 0.1 }, 8 + 0.8);
+      tl.fromTo("#scene-chart .name", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.1 }, 8 + 0.8);
+      tl.fromTo("#scene-chart .value", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.1 }, 8 + 1.5);
+
+      // Scene 4: steps, one at a time
+      enter("#scene-steps .in", 14 + 0.2);
+      enter("#scene-steps .step", 14 + 0.8);
+
+      // Scene 5: quote
+      enter("#scene-quote .in", 20 + 0.3);
+
+      // Scene 6: takeaway
+      enter("#scene-takeaway .in", 24 + 0.3);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
