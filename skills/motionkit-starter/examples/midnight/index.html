@@ -13,6 +13,7 @@
       /* Style tokens: Midnight */
       :root {--bg: #0b0c10;--bg2: #0b0c10;--ink: #f2f3f7;--accent: #a596ff;--muted: #9197aa;--surface: #14161c;--head: "Inter", sans-serif;--body: "Inter", sans-serif;--weight: 700;--radius: 14px;}
       :root { --on-accent: #0b0c10; --glow: rgba(0, 0, 0, 0.14); }
+      .stage.has-pic h1 { font-size: 87px; } .stage.has-pic h2 { font-size: 62px; }
 
       body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
       #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
@@ -71,6 +72,21 @@
       .side p { font-size: 46px; max-width: none; color: var(--ink); margin: 0; }
       .side .tick { position: absolute; right: 30px; top: 30px; width: 64px; height: 64px; color: var(--accent); }
       .vs { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--accent); color: var(--on-accent); font-size: 34px; font-weight: 700; box-sizing: border-box; }
+      .stage.has-pic { flex-direction: row; align-items: center; gap: 84px; text-align: left; }
+      .stage.has-pic.pic-left { flex-direction: row-reverse; }
+      .pic-text { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 36px; align-items: flex-start; }
+      .pic { flex: none; width: 760px; height: 570px; border-radius: 26px; overflow: hidden; box-shadow: 0 34px 90px rgba(0, 0, 0, 0.22); box-sizing: border-box; }
+      .pic.is-wide { width: 900px; height: 675px; }
+      .pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .stage.has-pic .quote { font-size: 64px; }
+      .stage.has-pic p { margin: 0; }
+      .line { display: block; width: 100%; height: 520px; overflow: visible; }
+      .line .trace { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; }
+      .line .base { stroke: var(--muted); stroke-width: 3; opacity: 0.5; }
+      .line .dot { fill: var(--bg); stroke: var(--accent); stroke-width: 6; }
+      .line .dot.is-key { fill: var(--accent); }
+      .line text { fill: var(--ink); font-family: var(--body); font-size: 36px; font-weight: 700; text-anchor: middle; }
+      .line text.nm { fill: var(--muted); font-size: 28px; font-weight: 400; }
       .mark { display: block; height: 150px; font-family: var(--head); font-weight: var(--weight); font-size: 320px; line-height: 1; color: var(--accent); }
       .cta { display: block; width: fit-content; padding: 22px 44px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 44px; font-weight: 700; box-sizing: border-box; }
 
@@ -88,11 +104,13 @@
       <div id="frame"></div>
 
       <section id="s1-title" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
-        <svg class="orn" viewBox="0 0 640 640" aria-hidden="true"><circle pathLength="1" cx="640" cy="0" r="240"/><circle pathLength="1" cx="640" cy="0" r="380"/><circle pathLength="1" cx="640" cy="0" r="520"/></svg>
-        <div class="stage" id="s1-title-stage">
+        <div class="stage has-pic" id="s1-title-stage">
+          <div class="pic-text">
           <div class="label in">Roadmap · Q4</div>
           <h1 class="reveal"><span class="w"><span class="wi">Ship</span></span> <span class="w"><span class="wi">less,</span></span> <span class="w"><span class="wi hl">finish</span></span> <span class="w"><span class="wi hl">more</span></span></h1>
           <p class="in">Three projects this quarter instead of seven.</p>
+          </div>
+          <div class="pic" id="s1-title-pic"><img src="images/s1-title.png" alt=""></div>
         </div>
       </section>
 
@@ -108,12 +126,14 @@
       <section id="s3-chart" class="clip" data-start="9.5" data-duration="7.1" data-track-index="1">
         <div class="stage" id="s3-chart-stage">
           <h2 class="reveal"><span class="w"><span class="wi">Cycle</span></span> <span class="w"><span class="wi">time</span></span> <span class="w"><span class="wi">per</span></span> <span class="w"><span class="wi">issue</span></span> <span class="w"><span class="wi">(days)</span></span></h2>
-          <div class="chart">
-            <div class="col"><div class="value">9</div><span class="bar" style="height: 100%"></span><div class="name">Jul</div></div>
-            <div class="col"><div class="value">8</div><span class="bar" style="height: 89%"></span><div class="name">Aug</div></div>
-            <div class="col"><div class="value">6</div><span class="bar" style="height: 67%"></span><div class="name">Sep</div></div>
-            <div class="col is-key-col"><div class="value">4</div><span class="bar is-key" style="height: 44%"></span><div class="name">Oct</div></div>
-          </div>
+          <svg class="line" viewBox="0 0 1640 520" aria-hidden="true">
+            <line class="base" x1="40" y1="430" x2="1600" y2="430"/>
+            <path class="trace" pathLength="1" d="M90 100 L577 133 L1063 200 L1550 267"/>
+            <g class="pt"><circle class="dot" cx="90" cy="100" r="13"/><text x="90" y="66">9</text><text class="nm" x="90" y="488">Jul</text></g>
+            <g class="pt"><circle class="dot" cx="577" cy="133" r="13"/><text x="577" y="99">8</text><text class="nm" x="577" y="488">Aug</text></g>
+            <g class="pt"><circle class="dot" cx="1063" cy="200" r="13"/><text x="1063" y="166">6</text><text class="nm" x="1063" y="488">Sep</text></g>
+            <g class="pt"><circle class="dot is-key" cx="1550" cy="267" r="18"/><text x="1550" y="233">4</text><text class="nm" x="1550" y="488">Oct</text></g>
+          </svg>
         </div>
       </section>
 
@@ -181,7 +201,9 @@
       tl.fromTo("#s1-title-stage", { scale: 1 }, { scale: 1.035, duration: 4.5, ease: "none" }, 0);
       heading("#s1-title .reveal", 0.2);
       if (document.querySelector("#s1-title .in")) enter("#s1-title .in", 0.5);
-      draw("#s1-title .orn circle", 0.1, 1.6);
+      tl.fromTo("#s1-title-pic", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.9, ease: "power3.inOut" }, 0.3);
+      tl.fromTo("#s1-title-pic img", { scale: 1.18 }, { scale: 1.04, duration: 4.5, ease: "none" }, 0);
+      if (document.querySelector("#s1-title .orn")) draw("#s1-title .orn circle", 0.1, 1.6);
       tl.fromTo("#s1-title-stage", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 4.1);
 
       // s2-stat: 4.5s to 9.5s
@@ -200,9 +222,8 @@
       tl.fromTo("#s3-chart-stage", { scale: 1 }, { scale: 1.035, duration: 7.1, ease: "none" }, 9.5);
       heading("#s3-chart .reveal", 9.7);
       if (document.querySelector("#s3-chart .in")) enter("#s3-chart .in", 10);
-      tl.fromTo("#s3-chart .bar", { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: "power3.out", stagger: 0.12 }, 10.3);
-      tl.fromTo("#s3-chart .name", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.12 }, 10.3);
-      tl.fromTo("#s3-chart .value", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.12 }, 11);
+      draw("#s3-chart .trace", 10.3, 1.8);
+      tl.fromTo("#s3-chart .pt", { opacity: 0 }, { opacity: 1, duration: 0.35, stagger: 0.4 }, 10.4);
       tl.fromTo("#s3-chart-stage", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 16.2);
 
       // s4-steps: 16.6s to 23.5s
@@ -224,7 +245,7 @@
       tl.fromTo("#s6-takeaway-stage", { scale: 1 }, { scale: 1.035, duration: 5, ease: "none" }, 29.7);
       heading("#s6-takeaway .reveal", 29.9);
       if (document.querySelector("#s6-takeaway .in")) enter("#s6-takeaway .in", 30.2);
-      draw("#s6-takeaway .orn circle", 29.8, 1.6);
+      if (document.querySelector("#s6-takeaway .orn")) draw("#s6-takeaway .orn circle", 29.8, 1.6);
 
       window.__timelines["main"] = tl;
     </script>

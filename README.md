@@ -33,7 +33,7 @@ For Codex use `~/.codex/skills/`, for Cursor `~/.cursor/skills/`. Restart the ag
 ## What you get
 
 - **Two complete styles**: Paper Editorial (essays, explainers, thought pieces); Midnight (developer products, roadmaps, changelogs). Each has its fonts, colour tokens, layout rules and motion profile.
-- **A working 28-second example in each style** with six scene types: title, big number that counts up, bar chart, steps, quote and takeaway. Each renders as is.
+- **A working example video in each style**, with a title picture drawn in that style, with six scene types: title, big number that counts up, bar chart, steps, quote and takeaway. Each renders as is.
 - **Composition rules** that keep the agent's output renderable: one paused timeline, no CSS transforms fighting tweens, scenes that run back to back.
 - **A source check**: `tools/check.mjs` fails the build when a number on screen is not in your document, or is written differently from how your document writes it.
 
