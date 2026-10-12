@@ -10,23 +10,19 @@ Anthropic's Claude Motion is in beta on Team and Enterprise plans. This works wi
 | --- | --- |
 | ![Paper Editorial example](docs/paper-editorial.gif) | ![Midnight example](docs/midnight.gif) |
 
-Both clips are real output of the example projects in this repo, not mock-ups.
+Both clips are real output of the example projects in this repo, not mock-ups. Last tested end to end on 12 October 2026 with Claude Code running Claude Opus 5.5: both examples rendered, and a new 28-second video was built from a fresh document.
 
 ## Install
 
 You need Node.js 22 or newer and FFmpeg.
 
-```bash
-git clone https://github.com/dll-create/claude-motion-starter.git
-```
-
-Then copy the skill into your agent's skills folder:
+One command clones the repo and copies the skill into Claude Code:
 
 ```bash
-cp -r claude-motion-starter/skills/motionkit-starter ~/.claude/skills/
+git clone https://github.com/dll-create/claude-motion-starter.git && mkdir -p ~/.claude/skills && cp -r claude-motion-starter/skills/motionkit-starter ~/.claude/skills/
 ```
 
-For Codex use `~/.codex/skills/`, for Cursor `~/.cursor/skills/`. Restart the agent, attach a document and say:
+For Codex copy it to `~/.codex/skills/` instead, for Cursor to `~/.cursor/skills/`. Restart the agent, attach a document and say:
 
 > Turn this doc into a motion video.
 
