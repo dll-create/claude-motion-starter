@@ -33,7 +33,7 @@ For Codex use `~/.codex/skills/`, for Cursor `~/.cursor/skills/`. Restart the ag
 ## What you get
 
 - **Two complete styles**: Paper Editorial (essays, explainers, thought pieces); Midnight (developer products, roadmaps, changelogs). Each has its fonts, colour tokens, layout rules and motion profile.
-- **A working example video in each style**, with a title picture drawn in that style, with six scene types: title, big number that counts up, bar chart, steps, quote and takeaway. Each renders as is.
+- **A working example video in each style**, with a title picture drawn in that style, with six scene types: title, big number that counts up, chart (bars in one, a line in the other), steps, quote and takeaway. Each renders as is.
 - **Composition rules** that keep the agent's output renderable: one paused timeline, no CSS transforms fighting tweens, scenes that run back to back.
 - **A source check**: `tools/check.mjs` fails the build when a number on screen is not in your document, or is written differently from how your document writes it.
 
@@ -50,16 +50,17 @@ This starter is the video workflow with two styles. [MotionKit](https://motionfo
 
 | | Starter (this repo) | MotionKit |
 | --- | --- | --- |
-| Styles | 2 | 16 |
+| Styles | 2 | 37, plus 36 colour palettes and your own brand colours |
 | MP4 video | Yes | Yes |
-| Interactive deck with quizzes, filters and drag-to-match | No | Yes |
+| Narrated deck with charts, quizzes and drag-to-match | No | Yes |
 | PowerPoint export | No | Yes |
-| Reads Word and PowerPoint files | No | Yes |
-| Voiceover and music beds | No | Yes |
+| Reads Word, PowerPoint, PDF and web pages | No | Yes |
+| Pictures drawn in the style | No | Yes |
+| Voiceover and music | No | Yes |
 | Hosted share links | No | Yes |
 | Price | Free, MIT | From $19.9 a month |
 
-See [all 16 styles](https://motionforclaude.com/claude-motion-templates) and [rendered examples](https://motionforclaude.com/claude-motion-examples).
+See [all 37 styles](https://motionforclaude.com/claude-motion-templates) and [rendered examples](https://motionforclaude.com/claude-motion-examples).
 
 ## Licence
 

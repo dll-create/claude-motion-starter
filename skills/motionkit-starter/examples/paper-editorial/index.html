@@ -30,6 +30,8 @@
       .big small { font-size: 0.4em; margin-left: 0.08em; }
       .chart { display: flex; align-items: flex-end; gap: 48px; height: 500px; box-sizing: border-box; }
       .col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; }
+      .plot { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; padding-top: 96px; box-sizing: border-box; }
+      .plot .bar, .plot .value { flex: none; }
       .bar { display: block; width: 100%; background: var(--surface); border-radius: var(--radius); transform-origin: 50% 100%; box-sizing: border-box; }
       .bar.is-key { background: var(--accent); }
       .value { font-size: 44px; font-weight: 700; }
@@ -128,10 +130,10 @@
         <div class="stage" id="s3-chart-stage">
           <h2 class="reveal"><span class="w"><span class="wi">Hours</span></span> <span class="w"><span class="wi">in</span></span> <span class="w"><span class="wi">meetings</span></span> <span class="w"><span class="wi">per</span></span> <span class="w"><span class="wi">person,</span></span> <span class="w"><span class="wi">per</span></span> <span class="w"><span class="wi">week</span></span></h2>
           <div class="chart">
-            <div class="col"><div class="value">14</div><span class="bar" style="height: 100%"></span><div class="name">Jan</div></div>
-            <div class="col"><div class="value">12</div><span class="bar" style="height: 86%"></span><div class="name">Feb</div></div>
-            <div class="col"><div class="value">9</div><span class="bar" style="height: 64%"></span><div class="name">Mar</div></div>
-            <div class="col is-key-col"><div class="value">7</div><span class="bar is-key" style="height: 50%"></span><div class="name">Apr</div></div>
+            <div class="col"><div class="plot"><div class="value">14</div><span class="bar" style="height: 100%"></span></div><div class="name">Jan</div></div>
+            <div class="col"><div class="plot"><div class="value">12</div><span class="bar" style="height: 85.7%"></span></div><div class="name">Feb</div></div>
+            <div class="col"><div class="plot"><div class="value">9</div><span class="bar" style="height: 64.3%"></span></div><div class="name">Mar</div></div>
+            <div class="col is-key-col"><div class="plot"><div class="value">7</div><span class="bar is-key" style="height: 50%"></span></div><div class="name">Apr</div></div>
           </div>
         </div>
       </section>
@@ -189,7 +191,9 @@
         else tl.fromTo(selector + " .wi", { yPercent: 115 }, { yPercent: 0, duration: 0.7, ease: "power3.out", stagger: 0.07 }, at);
       }
       const draw = (selector, at, duration = 0.9) => tl.fromTo(selector, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration, ease: "power2.inOut", stagger: 0.12 }, at);
-      const pop = (selector, at) => tl.fromTo(selector, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)", stagger: 0.12 }, at);
+      // Scale only, no fade: a popped badge is at full colour from its first frame, so a
+      // contrast check that lands mid-pop does not read it as washed out.
+      const pop = (selector, at) => tl.fromTo(selector, { scale: 0 }, { scale: 1, duration: 0.5, ease: "back.out(1.8)", stagger: 0.12 }, at);
 
       // Running through the whole video: a slow drift behind everything and a progress line.
       tl.fromTo("#blob-a", { x: 0, y: 0 }, { x: 420, y: 260, duration: 34.7, ease: "none" }, 0);

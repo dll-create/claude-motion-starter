@@ -8,7 +8,7 @@ A complete, renderable example of this style is in `examples/paper-editorial/`. 
 
 ## Fonts
 
-Copy these files from the skill's `fonts/` folder into the project's `fonts/` folder, then declare them:
+These files are in `examples/paper-editorial/fonts/`. Copying the example folder brings them into the project's `fonts/` folder, where they are declared like this:
 
 - `fraunces-latin-600-normal.woff2` (Fraunces 600)
 - `inter-latin-400-normal.woff2` (Inter 400)

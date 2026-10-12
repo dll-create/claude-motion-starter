@@ -8,7 +8,7 @@ A complete, renderable example of this style is in `examples/midnight/`. Read it
 
 ## Fonts
 
-Copy these files from the skill's `fonts/` folder into the project's `fonts/` folder, then declare them:
+These files are in `examples/midnight/fonts/`. Copying the example folder brings them into the project's `fonts/` folder, where they are declared like this:
 
 - `inter-latin-700-normal.woff2` (Inter 700)
 - `inter-latin-400-normal.woff2` (Inter 400)

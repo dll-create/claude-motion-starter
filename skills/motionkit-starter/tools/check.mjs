@@ -117,7 +117,10 @@ if (deckRaw) {
     const where = `Slide ${i + 1} (${s.type})`;
     const shown = [];
     const collect = (v, key) => {
-      if (key === 'answer' || key === 'highlight' || key === 'type' || key === 'notes') return;
+      // Settings and labels for the tools, not text the viewer reads.
+      if (['answer', 'highlight', 'type', 'notes', 'id', 'image', 'picture', 'icon', 'kind', 'side', 'key'].includes(key)) return;
+      // A quiz's wrong options are meant to be wrong, so their numbers are not checked against the source.
+      if (key === 'options' && s.type === 'quiz') return;
       if (Array.isArray(v)) v.forEach((x) => collect(x));
       else if (v && typeof v === 'object') Object.entries(v).forEach(([k, x]) => collect(x, k));
       else if (v !== null && v !== undefined) shown.push(String(v));
@@ -126,15 +129,19 @@ if (deckRaw) {
     const text = shown.join(' \n ');
     checkPlaceholders(where, text);
     checkNumbers(where, text);
-    if (s.type === 'quiz') {
+    if (s.type === 'quiz' && s.statement) {
+      if (typeof s.answer !== 'boolean') errors.push(`${where}: a true-or-false quiz needs "answer": true or false.`);
+    } else if (s.type === 'quiz') {
       const answers = [].concat(s.answer);
       if (!Array.isArray(s.options) || s.options.length < 2) errors.push(`${where}: a quiz needs at least 2 options.`);
       else if (!answers.length || answers.some((a) => !Number.isInteger(a) || a < 0 || a >= s.options.length)) errors.push(`${where}: "answer" must be the position of a real option (0 to ${s.options.length - 1}).`);
     }
-    if (s.type === 'chart') {
-      for (const series of s.series || [{ values: s.values || [] }]) if ((series.values || []).length !== (s.labels || []).length) errors.push(`${where}: a series has ${(series.values || []).length} values for ${(s.labels || []).length} labels.`);
+    if (s.type === 'chart' && s.kind === 'scatter') {
+      if (!Array.isArray(s.points) || s.points.length < 3) errors.push(`${where}: a scatter chart needs at least 3 points.`);
+    } else if (s.type === 'chart') {
+      for (const series of s.bars ? [] : s.series || [{ values: s.values || [] }]) if ((series.values || []).length !== (s.labels || []).length) errors.push(`${where}: a series has ${(series.values || []).length} values for ${(s.labels || []).length} labels.`);
     }
-    if (!s.notes && s.type !== 'title') warnings.push(`${where}: no speaker notes.`);
+    if (!s.notes && !s.narration && !['quiz', 'match', 'sort', 'group'].includes(s.type)) warnings.push(`${where}: no speaker script ("narration").`);
   });
 }
 
